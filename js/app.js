@@ -5,14 +5,12 @@ const booksContainer = document.querySelector('#books-container');
 document.getElementById('book').addEventListener('submit', addBookToLibrary);
 
 // CONSTRUCTOR
-function Book(title, author, pages, status) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
+
+let Book = (title, author, pages, status) => {
+  return { title, author, pages, status };
 }
 
-function changeStatus(myLibrary, index) {
+let changeStatus = (myLibrary, index) => {
   if (myLibrary[index].status === true) {
     myLibrary[index].status = false;
 
@@ -25,15 +23,11 @@ function changeStatus(myLibrary, index) {
 }
 
 // lOGIC
-function buttonValue(status, button) {
-  if (status === true) {
-    button.textContent = 'Not Read';
-  } else if (status === false) {
-    button.textContent = 'Read';
-  }
+let buttonValue = (status, button) => {
+  status === true ? button.textContent = 'Not Read' : button.textContent = 'Read';
 }
 
-function deleteBook(index, myLibrary) {
+let deleteBook = (index, myLibrary) => {
   myLibrary.splice(index, 1);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   create(myLibrary);
@@ -111,7 +105,7 @@ function addBookToLibrary(e) {
   const pages = document.getElementById('pages').value;
   const status = document.getElementById('read').checked;
 
-  const book = new Book(title, author, pages, status);
+  const book = Book(title, author, pages, status);
 
   createStorage(book);
 
