@@ -1,18 +1,20 @@
-/* eslint-disable import/extensions, no-use-before-define, import/first, import/no-cycle */
-
-// EVENTS
-const booksContainer = document.querySelector('#books-container');
-document.getElementById('book').addEventListener('submit', addBookToLibrary);
+/* eslint-disable import/extensions, no-use-before-define, no-unused-expressions */
 
 // CONSTRUCTOR
-function Book(title, author, pages, status) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.status = status;
+class Book {
+  constructor(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
 }
 
-function changeStatus(myLibrary, index) {
+/* const Book = (title, author, pages, status) => ({
+  title, author, pages, status,
+}); */
+
+const changeStatus = (myLibrary, index) => {
   if (myLibrary[index].status === true) {
     myLibrary[index].status = false;
 
@@ -22,26 +24,22 @@ function changeStatus(myLibrary, index) {
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   }
   create(myLibrary);
-}
+};
 
 // lOGIC
-function buttonValue(status, button) {
-  if (status === true) {
-    button.textContent = 'Not Read';
-  } else if (status === false) {
-    button.textContent = 'Read';
-  }
-}
+const buttonValue = (status, button) => {
+  status === true ? button.textContent = 'Not Read' : button.textContent = 'Read';
+};
 
-function deleteBook(index, myLibrary) {
+const deleteBook = (index, myLibrary) => {
   myLibrary.splice(index, 1);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   create(myLibrary);
-}
+};
 
 // DOM manipulation
 
-function createStorage(book) {
+const createStorage = (book) => {
   if (localStorage.getItem('myLibrary') === null) {
     const myLibrary = [];
     myLibrary.unshift(book);
@@ -54,9 +52,9 @@ function createStorage(book) {
   }
 
   document.getElementById('book').reset();
-}
+};
 
-function create(myLibrary) {
+let create = (myLibrary) => {
   booksContainer.innerHTML = '';
 
   for (let i = 0; i < myLibrary.length; i += 1) {
@@ -101,10 +99,9 @@ function create(myLibrary) {
       deleteBook(i, myLibrary);
     });
   }
-}
+};
 
-
-function addBookToLibrary(e) {
+const addBookToLibrary = (e) => {
   e.preventDefault();
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
@@ -116,4 +113,8 @@ function addBookToLibrary(e) {
   createStorage(book);
 
   create(JSON.parse(localStorage.getItem('myLibrary')));
-}
+};
+
+// EVENTS
+const booksContainer = document.querySelector('#books-container');
+document.getElementById('book').addEventListener('submit', addBookToLibrary);
