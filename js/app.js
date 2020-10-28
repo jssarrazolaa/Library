@@ -1,16 +1,12 @@
-/* eslint-disable import/extensions, no-use-before-define, import/first, import/no-cycle */
-
-// EVENTS
-const booksContainer = document.querySelector('#books-container');
-document.getElementById('book').addEventListener('submit', addBookToLibrary);
+/* eslint-disable import/extensions, no-use-before-define, no-unused-expressions */
 
 // CONSTRUCTOR
 
-let Book = (title, author, pages, status) => {
-  return { title, author, pages, status };
-}
+const Book = (title, author, pages, status) => ({
+  title, author, pages, status,
+});
 
-let changeStatus = (myLibrary, index) => {
+const changeStatus = (myLibrary, index) => {
   if (myLibrary[index].status === true) {
     myLibrary[index].status = false;
 
@@ -20,22 +16,22 @@ let changeStatus = (myLibrary, index) => {
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   }
   create(myLibrary);
-}
+};
 
 // lOGIC
-let buttonValue = (status, button) => {
+const buttonValue = (status, button) => {
   status === true ? button.textContent = 'Not Read' : button.textContent = 'Read';
-}
+};
 
-let deleteBook = (index, myLibrary) => {
+const deleteBook = (index, myLibrary) => {
   myLibrary.splice(index, 1);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   create(myLibrary);
-}
+};
 
 // DOM manipulation
 
-function createStorage(book) {
+const createStorage = (book) => {
   if (localStorage.getItem('myLibrary') === null) {
     const myLibrary = [];
     myLibrary.unshift(book);
@@ -48,9 +44,9 @@ function createStorage(book) {
   }
 
   document.getElementById('book').reset();
-}
+};
 
-function create(myLibrary) {
+let create = (myLibrary) => {
   booksContainer.innerHTML = '';
 
   for (let i = 0; i < myLibrary.length; i += 1) {
@@ -95,10 +91,9 @@ function create(myLibrary) {
       deleteBook(i, myLibrary);
     });
   }
-}
+};
 
-
-function addBookToLibrary(e) {
+const addBookToLibrary = (e) => {
   e.preventDefault();
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
@@ -110,4 +105,8 @@ function addBookToLibrary(e) {
   createStorage(book);
 
   create(JSON.parse(localStorage.getItem('myLibrary')));
-}
+};
+
+// EVENTS
+const booksContainer = document.querySelector('#books-container');
+document.getElementById('book').addEventListener('submit', addBookToLibrary);
