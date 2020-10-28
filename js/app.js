@@ -1,10 +1,18 @@
 /* eslint-disable import/extensions, no-use-before-define, no-unused-expressions */
 
 // CONSTRUCTOR
+class Book {
+  constructor(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
+}
 
-const Book = (title, author, pages, status) => ({
+/* const Book = (title, author, pages, status) => ({
   title, author, pages, status,
-});
+}); */
 
 const changeStatus = (myLibrary, index) => {
   if (myLibrary[index].status === true) {
@@ -100,7 +108,7 @@ const addBookToLibrary = (e) => {
   const pages = document.getElementById('pages').value;
   const status = document.getElementById('read').checked;
 
-  const book = Book(title, author, pages, status);
+  const book = new Book(title, author, pages, status);
 
   createStorage(book);
 
